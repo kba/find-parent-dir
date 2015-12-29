@@ -43,3 +43,18 @@ exports.sync = function (currentFullPath, clue) {
 
   return testDir(splitPath(currentFullPath));
 }
+
+exports.require = function (currentFullPath, clue) {
+
+  function testDir(parts) {
+    if (parts.length === 0) return null;
+
+    var p = parts.join('');
+
+    var cluePath = path.join(p, clue);
+    var itdoes = existsSync(cluePath);
+    return itdoes ? require(cluePath) : testDir(parts.slice(0, -1));
+  }
+
+  return testDir(splitPath(currentFullPath));
+}

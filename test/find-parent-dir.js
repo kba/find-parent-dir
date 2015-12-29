@@ -28,7 +28,14 @@ test('sync finding .git root relative to the test dir', function (t) {
 
 test('sync finding this dir relative to the test dir', function (t) {
   var dir = findParentDir.sync(__dirname, 'find-parent-dir.js')
+  console.log(dir);
   t.equals(dir, path.resolve(__dirname))
+  t.end()
+})
+
+test('require parent package.json', function (t) {
+  var json = findParentDir.require(__dirname, 'package.json')
+  t.equals(json.name, require('../package.json').name);
   t.end()
 })
 
